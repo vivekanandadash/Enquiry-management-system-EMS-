@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 
@@ -37,6 +39,8 @@ public class UpdateRegistrationController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String number = request.getParameter("number");
+		HttpSession session = request.getSession(false);
+		if(session.getAttribute("email")!=null) {
 		
 		if(number.length()!=10) {
 			request.setAttribute("result", "Your Number must be exactly 10-Digit! your number:"+number+
@@ -63,6 +67,10 @@ public class UpdateRegistrationController extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
+	}else {
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
 	}
+}
 
 }

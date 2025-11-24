@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.ems_mvc_project1.model.DBServiceImplModel;
@@ -24,8 +26,6 @@ public class loginController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 
@@ -37,6 +37,8 @@ public class loginController extends HttpServlet {
 		service.connectDb();
 		boolean status = service.dataValidation(email,password);
 		if(status) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("email", email);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/registration.jsp");
 			rd.forward(request, response);
 		}else {
