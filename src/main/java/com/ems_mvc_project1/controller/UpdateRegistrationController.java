@@ -37,6 +37,7 @@ public class UpdateRegistrationController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//get data from view
 		String email = request.getParameter("email");
 		String number = request.getParameter("number");
 		

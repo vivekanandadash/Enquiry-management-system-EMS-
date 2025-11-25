@@ -27,6 +27,7 @@ public class RegistrationListController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		add try catch to prevent exception
 		try {
 			HttpSession session = request.getSession(false);
 			session.setMaxInactiveInterval(10);

@@ -28,6 +28,7 @@ public class LogoutController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		here session will be end
 		HttpSession session = request.getSession(false);
 		session.invalidate();
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");

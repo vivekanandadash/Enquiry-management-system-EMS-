@@ -31,9 +31,11 @@ public class loginController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			//getting the email id from view page
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
+//			call to service layer to send and recive data
 			DBServiceImplModel service = new DBServiceImplModel();
 			service.connectDb();
 			boolean status = service.dataValidation(email,password);
