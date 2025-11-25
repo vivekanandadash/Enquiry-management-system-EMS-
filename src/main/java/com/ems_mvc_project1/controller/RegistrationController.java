@@ -29,7 +29,11 @@ public class RegistrationController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+	try {
 		HttpSession session = request.getSession(false);
+		session.setMaxInactiveInterval(10);
+		
 		if(session.getAttribute("email")!=null) {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
@@ -67,6 +71,12 @@ public class RegistrationController extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}else {
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
+	}
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 	}

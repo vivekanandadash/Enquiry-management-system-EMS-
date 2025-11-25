@@ -13,7 +13,7 @@
   Enter password:<input type="password" name="password"><br><br>
   <input type="submit" value="Login">
   </form>
-  <%
+  <% 
   if(request.getAttribute("result")!=null){
 	 out.println(request.getAttribute("result"));
 	 

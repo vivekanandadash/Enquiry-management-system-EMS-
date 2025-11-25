@@ -27,19 +27,27 @@ public class RegistrationListController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session.getAttribute("email")!=null) {
-		DBServiceImplModel service = new DBServiceImplModel();
-		service.connectDb();
-		ResultSet result =  service.getRegistrationList();
-		
-		request.setAttribute("result", result);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/RegistrationList.jsp");
-		rd.forward(request, response);
-	}else {
-		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-		rd.forward(request, response);
-	}
+		try {
+			HttpSession session = request.getSession(false);
+			session.setMaxInactiveInterval(10);
+			if(session.getAttribute("email")!=null) {
+			DBServiceImplModel service = new DBServiceImplModel();
+			service.connectDb();
+			ResultSet result =  service.getRegistrationList();
+			
+			request.setAttribute("result", result);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/RegistrationList.jsp");
+			rd.forward(request, response);
+		}else {
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
+		}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
+		}
 		
 	}
 

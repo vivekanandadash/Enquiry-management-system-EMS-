@@ -39,7 +39,10 @@ public class UpdateRegistrationController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String number = request.getParameter("number");
+		
 		HttpSession session = request.getSession(false);
+		session.setMaxInactiveInterval(10);
+		
 		if(session.getAttribute("email")!=null) {
 		
 		if(number.length()!=10) {

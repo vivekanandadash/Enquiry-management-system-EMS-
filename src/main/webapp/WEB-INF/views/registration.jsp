@@ -18,7 +18,7 @@ Enter your Course:<input type="text" title="Enter your Course Name" placeholder=
 <input type="submit" value="Submit">
 
 <%
-if(request.getAttribute("result")!=null){
+if(request.getAttribute("result")!=null){ 
 	out.println(request.getAttribute("result"));
 }
 %>

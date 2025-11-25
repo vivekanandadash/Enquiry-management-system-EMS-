@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 
@@ -24,16 +26,30 @@ public class DeleteRegistrationController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String DeleteRow = request.getParameter("email");
-	    DBServiceImplModel service = new DBServiceImplModel();
-	    service.connectDb();
-	    service.deleteRegistration(DeleteRow);
-	    ResultSet result = service.getRegistrationList();
+	try {
+	HttpSession session = request.getSession(false);
 	    
-	    request.setAttribute("result", result);
-	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/RegistrationList.jsp");
-	    rd.forward(request, response);
-	    
+		if(session.getAttribute("empty")!=null) {
+			String DeleteRow = request.getParameter("email");
+		    DBServiceImplModel service = new DBServiceImplModel();
+		    service.connectDb();
+		    service.deleteRegistration(DeleteRow);
+		    ResultSet result = service.getRegistrationList();
+		    
+		    request.setAttribute("result", result);
+		    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/RegistrationList.jsp");
+		    rd.forward(request, response);
+		    
+		}else {
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
+		}
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
+	}
 	    
 	  
 	}

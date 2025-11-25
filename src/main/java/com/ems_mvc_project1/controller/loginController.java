@@ -30,22 +30,28 @@ public class loginController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		
-		DBServiceImplModel service = new DBServiceImplModel();
-		service.connectDb();
-		boolean status = service.dataValidation(email,password);
-		if(status) {
-			HttpSession session = request.getSession(true);
-			session.setAttribute("email", email);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/registration.jsp");
-			rd.forward(request, response);
-		}else {
-			request.setAttribute("result", "Please validate your email id and password!");
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-			rd.forward(request, response);
+		try {
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
 			
+			DBServiceImplModel service = new DBServiceImplModel();
+			service.connectDb();
+			boolean status = service.dataValidation(email,password);
+			if(status) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("email", email);
+				session.setMaxInactiveInterval(10);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/registration.jsp");
+				rd.forward(request, response);
+			}else {
+				request.setAttribute("result", "Please validate your email id and password!");
+				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+				rd.forward(request, response);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 
