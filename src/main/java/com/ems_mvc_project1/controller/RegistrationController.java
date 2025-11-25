@@ -35,6 +35,8 @@ public class RegistrationController extends HttpServlet {
 			session.setMaxInactiveInterval(10);
 			
 			if(session.getAttribute("email")!=null) {
+				
+				
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
 			String number = request.getParameter("number");

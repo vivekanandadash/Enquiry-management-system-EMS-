@@ -37,44 +37,51 @@ public class UpdateRegistrationController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//get data from view
-		String email = request.getParameter("email");
-		String number = request.getParameter("number");
-		
-		HttpSession session = request.getSession(false);
-		session.setMaxInactiveInterval(10);
-		
-		if(session.getAttribute("email")!=null) {
-		
-		if(number.length()!=10) {
-			request.setAttribute("result", "Your Number must be exactly 10-Digit! your number:"+number+
-		   "<br>Go to<a href='registrationList'> Registration list <a/> and try again");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/updateRegistration.jsp");
-			rd.forward(request, response);
-			return;
-		}
-		
-		DBServiceImplModel service = new DBServiceImplModel();
-		service.connectDb();
-		boolean status  = service.updateValidation(email,number);
-		
-		
-		if(status) {
-			ResultSet result = service.getRegistrationList();
-			request.setAttribute("result", result);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/RegistrationList.jsp");
-			rd.forward(request, response);
+		try {
+			//get data from view
+			String email = request.getParameter("email");
+			String number = request.getParameter("number");
+			
+			HttpSession session = request.getSession(false);
+			session.setMaxInactiveInterval(10);
+			
+			if(session.getAttribute("email")!=null) {
+			
+			if(number.length()!=10) {
+				request.setAttribute("result", "Your Number must be exactly 10-Digit! your number:"+number+
+			   "<br>Go to<a href='registrationList'> Registration list <a/> and try again");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/updateRegistration.jsp");
+				rd.forward(request, response);
+				return;
+			}
+			
+			DBServiceImplModel service = new DBServiceImplModel();
+			service.connectDb();
+			boolean status  = service.updateValidation(email,number);
+			
+			
+			if(status) {
+				ResultSet result = service.getRegistrationList();
+				request.setAttribute("result", result);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/RegistrationList.jsp");
+				rd.forward(request, response);
+			}else {
+				request.setAttribute("result", "Please re-Evalute your Email :"+email+
+				"<br>Go to<a href='registrationList'> Registration list <a/> and try again");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/updateRegistration.jsp");
+				rd.forward(request, response);
+			}
+			
 		}else {
-			request.setAttribute("result", "Please re-Evalute your Email :"+email+
-			"<br>Go to<a href='registrationList'> Registration list <a/> and try again");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/updateRegistration.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		}
-		
-	}else {
-		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-		rd.forward(request, response);
-	}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
+		}
 }
 
 }
