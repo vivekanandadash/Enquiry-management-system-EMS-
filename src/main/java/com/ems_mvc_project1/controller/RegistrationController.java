@@ -31,17 +31,16 @@ public class RegistrationController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		try {
-			HttpSession session = request.getSession(false);
-			session.setMaxInactiveInterval(10);
-			
-			if(session.getAttribute("email")!=null) {
-				
-				
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
 			String number = request.getParameter("number");
 			String course = request.getParameter("course");
+				
 			
+			HttpSession session = request.getSession(false);
+			session.setMaxInactiveInterval(1800);
+			
+			if(session.getAttribute("email")!=null) {
 			
 //			validating the user registration and check that user put the right mobile number
 

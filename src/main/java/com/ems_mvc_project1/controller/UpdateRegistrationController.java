@@ -43,8 +43,7 @@ public class UpdateRegistrationController extends HttpServlet {
 			String number = request.getParameter("number");
 			
 			HttpSession session = request.getSession(false);
-			session.setMaxInactiveInterval(10);
-			
+			session.setMaxInactiveInterval(1800);
 			if(session.getAttribute("email")!=null) {
 			
 			if(number.length()!=10) {

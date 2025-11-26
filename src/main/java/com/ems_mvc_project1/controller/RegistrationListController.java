@@ -30,7 +30,7 @@ public class RegistrationListController extends HttpServlet {
 //		add try catch to prevent exception
 		try {
 			HttpSession session = request.getSession(false);
-			session.setMaxInactiveInterval(10);
+			session.setMaxInactiveInterval(1800);
 			if(session.getAttribute("email")!=null) {
 			DBServiceImplModel service = new DBServiceImplModel();
 			service.connectDb();

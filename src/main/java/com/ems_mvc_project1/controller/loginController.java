@@ -30,19 +30,18 @@ public class loginController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+	
 			//getting the email id from view page
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
-//			call to service layer to send and recive data
 			DBServiceImplModel service = new DBServiceImplModel();
 			service.connectDb();
 			boolean status = service.dataValidation(email,password);
 			if(status) {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("email", email);
-				session.setMaxInactiveInterval(10);
+				session.setMaxInactiveInterval(1800);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/registration.jsp");
 				rd.forward(request, response);
 			}else {
@@ -51,10 +50,6 @@ public class loginController extends HttpServlet {
 				rd.forward(request, response);
 				
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+		} 
 	}
 
-}

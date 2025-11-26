@@ -10,7 +10,6 @@
 <a href="registration">Registration Form</a>
 <a href="registrationList">Registration List</a>
 <br>
-<h4>If your software idle for 10 seconds then it will logout automatically!</h4>
 <form action="logout" method="post">
 <input type="submit" value="Logout">
 </form>

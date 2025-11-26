@@ -28,7 +28,7 @@ public class DeleteRegistrationController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	try {
 	HttpSession session = request.getSession(false);
-	session.setMaxInactiveInterval(10);
+	session.setMaxInactiveInterval(1800);
 	    
 		if(session.getAttribute("email")!=null) {
 			String DeleteRow = request.getParameter("email");
