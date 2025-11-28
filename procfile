@@ -1,1 +1,0 @@
-web: java -jar target/dependency/jetty-runner.jar target/ems_mvc_project1.war
